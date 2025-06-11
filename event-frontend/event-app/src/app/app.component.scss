@@ -1,20 +1,130 @@
+/* Original :host style for overall app structure */
 :host {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  box-sizing: border-box; /* from old :host */
+  -webkit-font-smoothing: antialiased; /* from old :host */
+  -moz-osx-font-smoothing: grayscale; /* from old :host */
 }
 
-.content-container {
+/* Refactored styles from former app.component.html <style> tag */
+/* h1, p styles are now more generic and use global theme colors */
+h1 {
+  font-size: 2.5rem; /* Adjusted from 3.125rem, consider Bootstrap display classes for more impact if needed */
+  color: var(--text-color);
+  font-weight: 500;
+  line-height: 1.2; /* Adjusted from 100% */
+  letter-spacing: -0.05rem; /* Adjusted from -0.125rem */
+  margin: 0;
+}
+
+p {
+  margin: 0; /* Default, can be overridden by Bootstrap utilities */
+  color: var(--text-secondary-color);
+}
+
+/* .angular-logo can remain if used in the template somewhere, otherwise remove */
+.angular-logo {
+  max-width: 9.2rem;
+}
+
+/* .content is a generic class, ensure it doesn't clash or use more specific names if this is for a particular section not covered by router-outlet pages */
+.content {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 700px;
+  margin-bottom: 3rem; /* Example: use `mb-5` */
+}
+
+.content h1 {
+  margin-top: 1.75rem; /* Example: use `mt-4` */
+}
+
+.content p {
+  margin-top: 1.5rem; /* Example: use `mt-3` */
+}
+
+.divider {
+  width: 1px;
+  background: var(--primary-color); /* Use theme color */
+  margin-inline: 0.5rem; /* Example: `mx-1` or `mx-2` */
+}
+
+.pill-group {
+  display: flex;
+  flex-direction: column; /* Or 'row' depending on desired layout */
+  align-items: start; /* Or 'center' */
+  flex-wrap: wrap;
+  gap: 1.25rem; /* Bootstrap 'gap-3' or 'gap-4' */
+}
+
+.pill {
+  display: inline-flex; /* Changed to inline-flex for better flow with text */
+  align-items: center;
+  background: color-mix(in srgb, var(--accent-color) 15%, transparent);
+  color: var(--accent-color);
+  padding: 0.375rem 0.75rem; /* Bootstrap `py-1 px-2` or `py-2 px-3` */
+  border-radius: 50rem; /* Highly rounded for "pill" shape */
+  border: none; /* No border */
+  transition: background 0.3s ease;
+  font-size: 0.875rem; /* ~14px, Bootstrap `fs-sm` might be an alternative if defined */
+  font-weight: 500;
+  line-height: 1.4; /* Adjusted for better readability */
+  text-decoration: none;
+  white-space: nowrap; /* Prevent wrapping inside pill */
+}
+
+.pill:hover {
+  background: color-mix(in srgb, var(--accent-color) 30%, transparent);
+  color: var(--accent-color); /* Ensure text color remains on hover */
+}
+
+.pill-group svg { /* If SVGs are used within pills */
+  margin-left: 0.25rem; /* `ms-1` */
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* Bootstrap `gap-2` or `gap-3` */
+  margin-top: 1.5rem; /* `mt-3` */
+}
+
+.social-links path {
+  transition: fill 0.3s ease;
+  fill: var(--text-secondary-color);
+}
+
+.social-links a:hover svg path {
+  fill: var(--primary-color);
+}
+
+/* Responsive adjustments for .content and .divider */
+@media screen and (max-width: 650px) {
+  .content {
+    flex-direction: column;
+    width: auto; /* Adjust from max-content for better responsiveness */
+    align-items: center; /* Center items in column layout */
+  }
+
+  .divider {
+    height: 1px;
+    width: 100%; /* Full width for horizontal divider */
+    background: var(--primary-color);
+    margin-block: 1.5rem; /* `my-3` */
+  }
+}
+
+/* This ensures the main content area expands and pushes the footer down. */
+/* The <main> element is part of app.component.html structure housing <router-outlet> */
+main {
   flex: 1;
-  padding: 20px;
-  margin-top: 64px;
-  background-color: #f8f9fa;
+  /* Padding for main content can be added here or within individual page components using Bootstrap spacing (e.g., pt-3, px-4) */
 }
 
-.footer {
-  background-color: #343a40;
-  color: white;
-  text-align: center;
-  padding: 20px 0;
-  margin-top: auto;
-}
+/* Removed .content-container and .footer rules from original app.component.scss as they are handled by Bootstrap and global styles. */
+/* Footer styling is primarily done via Bootstrap classes on the <footer> element in app.component.html. */
+/* e.g. class="bg-dark text-white mt-auto py-4" */
+/* The `mt-auto` on the footer combined with `flex: 1;` on `main` and `min-height: 100vh` on `:host` ensures footer sticks to bottom. */
