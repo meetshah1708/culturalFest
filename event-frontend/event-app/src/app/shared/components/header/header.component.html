@@ -28,6 +28,7 @@
         <ng-template #loggedIn>
           <a class="nav-link" routerLink="/profile" routerLinkActive="active">My Profile</a>
           <a class="nav-link" routerLink="/registration" routerLinkActive="active">My Registrations</a>
+          <a *ngIf="isStaff" class="nav-link" routerLink="/checkin" routerLinkActive="active">Staff Check-In</a>
           <a class="nav-link" href="javascript:void(0)" (click)="logout()">Logout</a>
         </ng-template>
       </div>

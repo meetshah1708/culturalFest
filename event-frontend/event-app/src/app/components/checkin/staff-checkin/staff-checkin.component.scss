@@ -1,0 +1,14 @@
+.scan-area {
+  background: #111827;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+video {
+  max-height: 360px;
+  object-fit: cover;
+}

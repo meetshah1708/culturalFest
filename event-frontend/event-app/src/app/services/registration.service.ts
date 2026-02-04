@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ActivityRegistration } from '../models/activity-registration.model';
+import { ActivityRegistration, ActivityRegistrationResponse } from '../models/activity-registration.model';
 import { API_ENDPOINTS, environment } from '../core/constants/api.constants';
 
 @Injectable({
@@ -10,8 +10,8 @@ import { API_ENDPOINTS, environment } from '../core/constants/api.constants';
 export class RegistrationService {
   constructor(private http: HttpClient) {}
 
-  registerForActivity(eventId: number, activityId: number, registration: ActivityRegistration): Observable<any> {
-    return this.http.post(API_ENDPOINTS.ACTIVITY_REGISTRATION(eventId, activityId), registration);
+  registerForActivity(eventId: number, activityId: number, registration: ActivityRegistration): Observable<ActivityRegistrationResponse> {
+    return this.http.post<ActivityRegistrationResponse>(API_ENDPOINTS.ACTIVITY_REGISTRATION(eventId, activityId), registration);
   }
 
   getRegistrationsByActivityId(eventId: number, activityId: number): Observable<ActivityRegistration[]> {

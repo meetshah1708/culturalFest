@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { staffGuard } from './core/guards/staff.guard';
 
 export const routes: Routes = [
   {
@@ -26,6 +27,12 @@ export const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./components/users/users.routes').then(m => m.USERS_ROUTES),
     canActivate: [authGuard]
+  },
+  {
+    path: 'checkin',
+    loadComponent: () => import('./components/checkin/staff-checkin/staff-checkin.component')
+      .then(m => m.StaffCheckInComponent),
+    canActivate: [staffGuard]
   },
   {
     path: '**',

@@ -3,6 +3,7 @@ package com.fsd.event.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "activity_registrations", uniqueConstraints = {
@@ -33,4 +34,15 @@ public class ActivityRegistration {
 
     @Column(name = "additional_info")
     private String additionalInfo;
+
+    @Column(name = "check_in_token", nullable = false, unique = true)
+    @Builder.Default
+    private String checkInToken = UUID.randomUUID().toString();
+
+    @Column(name = "checked_in")
+    @Builder.Default
+    private boolean checkedIn = false;
+
+    @Column(name = "checked_in_at")
+    private LocalDateTime checkedInAt;
 }

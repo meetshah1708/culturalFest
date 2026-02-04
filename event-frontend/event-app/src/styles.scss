@@ -1,12 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* Import Bootstrap CSS */
-@import 'bootstrap/dist/css/bootstrap.min.css';
-/* Import Bootstrap Icons */
-@import 'bootstrap-icons/font/bootstrap-icons.css';
-
-@use "sass:color";
-
 :root {
   --primary-color: #3f51b5;
   --secondary-color: #f50057;
@@ -51,8 +44,8 @@ main {
 }
 
 .btn-primary:hover {
-  background-color: color.adjust(var(--primary-color), $lightness: -10%);
-  border-color: color.adjust(var(--primary-color), $lightness: -10%);
+  background-color: #36459f;
+  border-color: #36459f;
 }
 
 /* Card hover effect */
