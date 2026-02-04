@@ -8,6 +8,8 @@ export const API_ENDPOINTS = {
   ACTIVITIES: (eventId: number) => `${environment.apiUrl}/events/${eventId}/activities`,
   ACTIVITY_REGISTRATION: (eventId: number, activityId: number) => 
     `${environment.apiUrl}/events/${eventId}/activities/${activityId}/registrations`,
+  CHECK_IN: `${environment.apiUrl}/checkin`,
+  CHECK_IN_RECENT: `${environment.apiUrl}/checkin/recent`,
   VENUES: `${environment.apiUrl}/venues`,
   USERS: `${environment.apiUrl}/users`,
   AUTH: `${environment.apiUrl}/auth`

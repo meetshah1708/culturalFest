@@ -1,6 +1,7 @@
 package com.fsd.event.controller;
 
 import com.fsd.event.dto.ActivityRegistrationDTO;
+import com.fsd.event.dto.ActivityRegistrationResponse;
 import com.fsd.event.service.ActivityRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ public class ActivityRegistrationController {
     private final ActivityRegistrationService registrationService;
 
     @PostMapping
-    public String register(
+    public ActivityRegistrationResponse register(
         @PathVariable Long activityId, 
         @RequestBody ActivityRegistrationDTO dto
     ) {

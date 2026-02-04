@@ -1,0 +1,54 @@
+<div class="container py-5">
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h4 class="mb-0">Staff Check-In</h4>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Scan attendee QR codes using the camera or enter a token manually.</p>
+
+          <div class="scan-area mb-4">
+            <video #video class="w-100 rounded" muted playsinline></video>
+          </div>
+
+          <div *ngIf="scanStatus" class="alert alert-success">{{ scanStatus }}</div>
+          <div *ngIf="scanError" class="alert alert-danger">{{ scanError }}</div>
+
+          <form class="d-flex gap-2" (ngSubmit)="onManualSubmit()">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter check-in token"
+              [(ngModel)]="manualToken"
+              name="manualToken"
+            />
+            <button class="btn btn-outline-primary" type="submit" [disabled]="isProcessing">
+              Check In
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0">Recent Check-Ins</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="recentCheckIns.length === 0" class="text-muted">
+            No check-ins yet.
+          </div>
+          <ul class="list-group list-group-flush" *ngIf="recentCheckIns.length > 0">
+            <li class="list-group-item" *ngFor="let entry of recentCheckIns">
+              <div class="fw-semibold">{{ entry.attendeeName }}</div>
+              <div class="small text-muted">{{ entry.activityName }}</div>
+              <div class="small">{{ entry.checkedInAt | date:'short' }}</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

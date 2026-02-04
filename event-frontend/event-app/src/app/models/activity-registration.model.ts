@@ -5,3 +5,9 @@ export interface ActivityRegistration {
   phone?: string;
   additional_info?: string;
 }
+
+export interface ActivityRegistrationResponse {
+  message: string;
+  registrationId: number;
+  checkInToken: string;
+}

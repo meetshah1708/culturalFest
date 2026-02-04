@@ -24,6 +24,8 @@ export class ActivityRegistrationComponent implements OnInit {
   submitting = false;
   error = '';
   success = '';
+  checkInToken = '';
+  qrCodeUrl = '';
   eventId: number = 0;
   activityId: number = 0;
 
@@ -46,6 +48,15 @@ export class ActivityRegistrationComponent implements OnInit {
       this.router.navigate(['/auth/login'], { 
         queryParams: { returnUrl: this.router.url } 
       });
+      return;
+    }
+
+    const tokenFromQuery = this.route.snapshot.queryParamMap.get('token');
+    if (tokenFromQuery) {
+      this.success = this.route.snapshot.queryParamMap.get('message') ?? 'Registration successful!';
+      this.checkInToken = tokenFromQuery;
+      this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(tokenFromQuery)}`;
+      this.loading = false;
       return;
     }
 
@@ -118,8 +129,10 @@ export class ActivityRegistrationComponent implements OnInit {
 
     this.registrationService.registerForActivity(this.eventId, this.activityId, registrationData)
       .subscribe({
-        next: () => {
-          this.success = 'Registration successful! You have been registered for this activity.';
+        next: (response) => {
+          this.success = response.message;
+          this.checkInToken = response.checkInToken;
+          this.qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(response.checkInToken)}`;
           this.submitting = false;
           // Reset the form
           this.registrationForm.reset();

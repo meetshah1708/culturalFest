@@ -1,6 +1,7 @@
 package com.fsd.event.service;
 
 import com.fsd.event.dto.ActivityRegistrationDTO;
+import com.fsd.event.dto.ActivityRegistrationResponse;
 import com.fsd.event.entity.*;
 import com.fsd.event.mapper.ActivityRegistrationMapper;
 import com.fsd.event.repository.ActivityRegistrationRepository;
@@ -16,7 +17,7 @@ public class ActivityRegistrationService {
     private final UserRepository userRepository;
     private final ActivityRepository activityRepository;
 
-    public String register(Long activityId, ActivityRegistrationDTO dto) {
+    public ActivityRegistrationResponse register(Long activityId, ActivityRegistrationDTO dto) {
         // 1. Find or create user
         User user = userRepository.findByEmail(dto.getEmail())
                 .orElseGet(() -> userRepository.save(User.builder()
@@ -30,7 +31,14 @@ public class ActivityRegistrationService {
         if (registrationRepository.existsByUser_UserIdAndActivity_ActivityId(
             user.getUserId(), activityId // Use activityId from URL
         )) {
-            return "Already registered!";
+            ActivityRegistration existingRegistration = registrationRepository
+                    .findByUser_UserIdAndActivity_ActivityId(user.getUserId(), activityId)
+                    .orElseThrow(() -> new RuntimeException("Registration not found"));
+            return new ActivityRegistrationResponse(
+                    "Already registered!",
+                    existingRegistration.getRegistrationId(),
+                    existingRegistration.getCheckInToken()
+            );
         }
 
         // 3. Fetch activity from URL path variable
@@ -41,8 +49,12 @@ public class ActivityRegistrationService {
         ActivityRegistration registration = ActivityRegistrationMapper.toEntity(
             user, activity, dto.getAdditional_info()
         );
-        registrationRepository.save(registration);
+        ActivityRegistration saved = registrationRepository.save(registration);
 
-        return "Registration successful!";
+        return new ActivityRegistrationResponse(
+                "Registration successful!",
+                saved.getRegistrationId(),
+                saved.getCheckInToken()
+        );
     }
 }
